@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Hex to RGB Converter</title>
+    <meta name="description" content="Simple Hex to RGB Converter" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta author="H43RO" />
+    <style>
+        h1 {
+            color: white;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: rgb(39, 49, 58);
+        }
+        
+        #converter {
+            text-decoration-color: aliceblue;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        input[type="text"] {
+            padding: 10px;
+            font-size: 25px;
+            border-radius: 8px;
+        }
+        
+        #resultRGB {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        #colorPreview {
+            width: 200px;
+            height: 100px;
+            margin: 0 auto;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hex to RGB Converter</h1>
+    <div id="converter">
+        <input type="text" id="hexInput" placeholder="ex) #FF0000" oninput="convertHexToRGB()" />
+        <br />
+        <div id="colorPreview"></div>
+    </div>
+    <div id="resultRGB"></div>
+
+    <script>
+        function convertHexToRGB() {
+            const hex = document.getElementById("hexInput").value.trim();
+
+            // Remove "#" if present
+            const hexWithoutHash = hex.startsWith("#") ? hex.slice(1) : hex;
+
+            // Ensure the remaining string is a valid hex color
+            const hexRegex = /^[0-9A-Fa-f]{6}$/;
+            if (!hexRegex.test(hexWithoutHash)) {
+                document.getElementById("resultRGB").innerText =
+                    "Invalid Hex! Please enter #FF0000, FF0000, ff0000 etc.";
+                return;
+            }
+
+            const r = parseInt(hexWithoutHash.substring(0, 2), 16);
+            const g = parseInt(hexWithoutHash.substring(2, 4), 16);
+            const b = parseInt(hexWithoutHash.substring(4, 6), 16);
+
+            const rgb = `RGB(${r}, ${g}, ${b})`;
+
+            document.getElementById("resultRGB").innerText = rgb;
+
+            // Update color preview
+            const colorPreview = document.getElementById("colorPreview");
+            colorPreview.style.backgroundColor = `#${hexWithoutHash}`;
+        }
+    </script>
+</body>
+
+</html>
